@@ -72,6 +72,7 @@ class SettingCheckError(Error):
         value : T
             The value which failed the check.
         """
+        self.raised_exception = raised_exception
         self.msg = raised_exception
         
 

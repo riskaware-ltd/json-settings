@@ -60,3 +60,5 @@ class StringSetSetting(js.TerminusSetting):
         else:
             self.value = value
 
+    def check(self):
+        pass

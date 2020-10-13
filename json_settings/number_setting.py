@@ -158,9 +158,8 @@ class NumberSetting(js.TerminusSetting):
                 raise js.SettingRangeTypeError('num', int)
         except KeyError:
             raise js.SettingRangeKeyError("num")
-        self.value = list(linspace(value['min'],
-                                   value['max'],
-                                   abs(value['num'])))
+        self.value = linspace(value['min'], value['max'], abs(value['num']))
+        self.value = [self.type(item) for item in self.value]
         self._range = True
         try:
             self._match = value["match"]
