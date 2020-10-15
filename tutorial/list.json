@@ -1,0 +1,16 @@
+{
+    "entries": [
+        {
+            "kind": "car",
+            "cost": 1000
+        },
+        {
+            "kind": "car",
+            "cost": 3000
+        },
+        {
+            "kind": "plane",
+            "cost": 10000 
+        }
+    ]
+}

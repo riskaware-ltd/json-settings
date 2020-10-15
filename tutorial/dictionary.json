@@ -1,0 +1,16 @@
+{
+    "entries": {
+        "cheap_car": {
+            "kind": "caofr",
+            "cost": 1000
+        },
+        "expensive_car": {
+            "kind": "car",
+            "cost": 3000
+        },
+        "cheap_plane": {
+            "kind": "plane",
+            "cost": 10000 
+        }
+    }
+}

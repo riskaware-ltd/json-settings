@@ -1,0 +1,15 @@
+{
+    "primary_number": {
+        "array": [1.0, 2.0, 3.0],
+        "match": "best_match"
+    },
+    "secondary_number": {
+        "min": 4.0,
+        "max": 6.0,
+        "num": 3
+    },
+    "tertiary_number": {
+        "array": [-1.0, -2.0, -3.0],
+        "match": "best_match"
+    }
+}

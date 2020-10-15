@@ -1,0 +1,7 @@
+{
+    "important_number": {
+        "min": -1.0,
+        "max": 5.0,
+        "num": 6
+    } 
+}
