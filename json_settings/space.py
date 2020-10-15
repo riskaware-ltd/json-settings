@@ -45,7 +45,7 @@ class Space:
     
     """
 
-    def __init__(self, setting: Type[js.Settings], restrict: js.StringDict):
+    def __init__(self, setting: Type[js.Settings], restrict: js.StringDict = {}):
         """The constructor for the :class:`Space` class.
 
         Parameters
