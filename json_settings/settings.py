@@ -151,7 +151,7 @@ class Settings:
                     if isinstance(value, setting_type):
                         setattr(self, setting, value)
                     else:
-                        raise js.SettingTypeError(setting_type, type(setting))
+                        raise js.SettingTypeError(setting_type, type(value))
                 except js.SettingTypeError as e:
                     raise js.SettingErrorMessage(setting, original_error=e)
         self.__source__ = values
