@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='json_settings',
-    version='0.1.1',
+    version='0.1.3',
     author="Riskaware Ltd",
     packages=find_packages(),
     description="JSON Configuration File Framework",
