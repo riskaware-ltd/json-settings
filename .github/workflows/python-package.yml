@@ -1,7 +1,7 @@
 # This workflow will install Python dependencies, run tests and lint with a variety of Python versions
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
-name: Python package
+name: Test and Lint
 
 on:
   push:
@@ -30,7 +30,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |
-        flake8 .\json_settings\ --exit-zero --show-source --per-file-ignores="__init__.py:F401"
+        flake8 json_settings --exit-zero --show-source --per-file-ignores="__init__.py:F401"
     - name: Test with pytest
       run: |
         pytest
