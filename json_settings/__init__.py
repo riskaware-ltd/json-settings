@@ -2,6 +2,9 @@ from typing import Dict
 from typing import List
 from typing import Union
 
+StringDict = Dict[str, str]
+StringList = List[str]
+
 from .settings import Settings
 
 from .dictionary_setting import DictionarySetting
@@ -28,7 +31,3 @@ from .error import OptionsAttributeTypeError
 from .error import TypeAttributeNotImplementedError
 from .error import TypeAttributeTypeError
 from .error import ConsistencyError
-
-
-StringDict = Dict[str, str]
-StringList = List[str]
