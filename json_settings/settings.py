@@ -125,9 +125,7 @@ class Settings:
                     raise js.SettingNotFoundError()
             except js.SettingNotFoundError as e:
                 raise js.SettingErrorMessage(setting, original_error=e)
-            if value is None:
-                setattr(self, setting, value)
-            elif setting_type not in self.primitive:
+            if setting_type not in self.primitive:
                 try:
                     setattr(self, setting, setting_type(value))
                 except js.SettingTypeError as e:
@@ -146,6 +144,8 @@ class Settings:
                     raise js.SettingErrorMessage(setting, original_error=e)
                 except js.SettingErrorMessage as e:
                     raise js.SettingErrorMessage(setting, branch_error=e)
+            elif value is None:
+                setattr(self, setting, value)
             else:
                 try:
                     if isinstance(value, setting_type):
