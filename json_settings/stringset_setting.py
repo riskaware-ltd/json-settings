@@ -1,23 +1,24 @@
 import json_settings as js
 
+
 class StringSetSetting(js.TerminusSetting):
     """The as class that stores a string from a predefined list.
 
     Attributes
     ----------
     type : :obj:`type`
-        The attribute defined in the child class that determines the type of the
-        setting stored in the class.
+        The attribute defined in the child class that determines the type of
+        the setting stored in the class.
 
     value: :obj:`str`
         The stored string.
-    
+
     options : :obj:`List`[:obj:`str`]
         The predefined list of string that are valid. This attribute should be
         defined in the child constructor.
 
     """
-    
+
     @property
     def get(self):
         return self.value
@@ -35,8 +36,8 @@ class StringSetSetting(js.TerminusSetting):
         Raises
         ------
         :class:`~.OptionsAttributeNotImplementedError`
-            If the :attr:`options` attribute has not been defined in the derived
-            class constructor.
+            If the :attr:`options` attribute has not been defined in the
+            derived class constructor.
 
         :class:`~.OptionsAttributeTypeError`
             If the item contained in the :attr:`options` attribute are not

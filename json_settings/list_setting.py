@@ -8,21 +8,21 @@ class ListSetting(js.Settings):
     """A base class for a list of settings classes.
 
     This class is used to store a number of settings objects. Instances must be
-    of same type. 
+    of same type.
 
     The implementation of the derived class constructor should be as follows::
 
         @Settings.assign
         def __init__(self, values: list):
             self.value = type
-    
+
     Where `type` is the type of the objects that will be in the list.
 
     Attributes
     ----------
     type : :obj:`type`
-        The attribute defined in the child class that determines the type of the
-        setting stored in the class.
+        The attribute defined in the child class that determines the type of
+        the setting stored in the class.
 
     value : :obj:`List`[:obj:`Any`]
         The list of value stored after all checks have been passed.
@@ -51,14 +51,14 @@ class ListSetting(js.Settings):
         ------
         :class:`~.TypeAttributeNotImplementedError`
             If the type attribute has not been defined in the derived class
-            constructor. 
+            constructor.
 
         :class:`~.TypeAttributeTypeError`
             If the :attr:`type` is not of type :obj:`type`
 
         :class:`~.SettingTypeError`
             If `values` is not a :obj:`list`.
-        
+
         :class:`~.SettingsListTypeError`
             If any of the items in `values` are not of the required type,
             as specified in the derived class.
@@ -104,23 +104,23 @@ class ListSetting(js.Settings):
         """An overload of the list get item method.
 
         Returns the list or sub list or entry depending on `key`. If the items
-        stored in the list are :class:`~.TerminusSetting` derived, then it will return
-        a list or value which are the `value` attribute of the terminus
+        stored in the list are :class:`~.TerminusSetting` derived, then it will
+        return a list or value which are the `value` attribute of the terminus
         instances.
 
         """
         rv = self.value[key]
         if issubclass(self.type, js.TerminusSetting):
             if isinstance(rv, Iterable):
-                return [item.get for item in rv] 
+                return [item.get for item in rv]
             else:
                 return rv.get
         else:
             return rv
-    
+
     def __len__(self):
         """Mapping __len__ to attibute `value` __len__.
-        
+
         Returns
         -------
         :obj:`int`
@@ -128,4 +128,3 @@ class ListSetting(js.Settings):
 
         """
         return len(self.value)
-

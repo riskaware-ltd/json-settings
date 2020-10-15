@@ -5,21 +5,21 @@ class DictionarySetting(js.Settings):
     """A base class for a dictionary of settings classes.
 
     This class is used to store a number of settings objects. Instances must be
-    of same type. 
+    of same type.
 
     The implementation of the derived class constructor should be as follows::
 
         @Settings.assign
         def __init__(self, values: dict):
             self.value = type
-    
+
     Where `type` is the type of the objects that will be in the dictionary.
 
     Attributes
     ----------
     type : :obj:`type`
-        The attribute defined in the child class that determines the type of the
-        setting stored in the class.
+        The attribute defined in the child class that determines the type of
+        the setting stored in the class.
 
     value : :obj:`Dict`[:obj:`str`, :obj:`Any`]
         The list of value stored after all checks have been passed.
@@ -49,14 +49,14 @@ class DictionarySetting(js.Settings):
         ------
         :class:`~.TypeAttributeNotImplementedError`
             If the type attribute has not been defined in the derived class
-            constructor. 
+            constructor.
 
         :class:`~.TypeAttributeTypeError`
             If the :attr:`type` is not of type :obj:`type`
 
         :class:`~.SettingTypeError`
             If `values` is not a :obj:`list`.
-        
+
         :class:`~.SettingsListTypeError`
             If any of the items in `values` are not of the required type,
             as specified in the derived class.
@@ -97,12 +97,13 @@ class DictionarySetting(js.Settings):
                     self.value[key] = value
                 except js.SettingTypeError as e:
                     raise js.SettingErrorMessage(key, original_error=e)
-    
+
     def __getitem__(self, key):
         """An overload of the :obj:`dict` __getitem__ method.
 
-        Returns the value for the given key. If the value is :class:`~.TerminusSetting`
-        derived, then it will return `value` attribute of the terminus instance.
+        Returns the value for the given key. If the value is
+        :class:`~.TerminusSetting` derived, then it will return `value`
+        attribute of the terminus instance.
 
         """
         rv = self.value[key]
@@ -110,10 +111,10 @@ class DictionarySetting(js.Settings):
             return rv.value
         else:
             return rv
-    
+
     def __len__(self):
         """Mapping __len__ to attribute `value` __len__.
-        
+
         Returns
         -------
         :obj:`int`
@@ -121,19 +122,18 @@ class DictionarySetting(js.Settings):
 
         """
         return len(self.value)
-    
+
     def keys(self):
         return self.value.keys()
-    
+
     def values(self):
         if issubclass(self.type, js.terminus_setting.TerminusSetting):
             return {k: v.value for k, v in self.value.items()}.values()
         else:
             return self.value.values()
-    
+
     def items(self):
         if issubclass(self.type, js.terminus_setting.TerminusSetting):
             return {k: v.value for k, v in self.value.items()}.items()
         else:
             return self.value.items()
-

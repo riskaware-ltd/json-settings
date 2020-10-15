@@ -9,7 +9,7 @@ from copy import deepcopy
 from functools import reduce
 
 from typing import Type
-from typing import Union 
+from typing import Union
 
 from numpy import prod
 from numpy import unravel_index
@@ -35,17 +35,19 @@ class Space:
     ----------
     setting : :obj:`Type`[:class:`~.Settings`]
         The base settings object to be expanded.
-    
+
     restrict : :obj:`dict`
         A dictionary of :obj:`str`: :obj:`str` pairs that are used to exclude
         subsetting branches from the exploration function for finding ranges.
         If when searching the settings object for ranges, a setting with the
         same name as a key in :attr:`restrict` is found, only subsettings with
         name equal to the corresponding key will be searched.
-    
+
     """
 
-    def __init__(self, setting: Type[js.Settings], restrict: js.StringDict = {}):
+    def __init__(self,
+                 setting: Type[js.Settings],
+                 restrict: js.StringDict = {}):
         """The constructor for the :class:`Space` class.
 
         Parameters
@@ -53,11 +55,11 @@ class Space:
         setting : :obj:`Type`[:class:`~.Settings`]
             The settings object being expanded.
 
-        restrict : :obj:`dict`[:obj:`str`, :obj:`str`]
-            A dictionary of :obj:`str`: :obj:`str` pairs that are used to exclude
-            subsetting branches from the exploration function for finding ranges.
-            If when searching the settings object for ranges, a setting with the
-            same name as a key in :attr:`restrict` is found, only subsettings with
+        restrict : :obj:`dict`[:obj:`str`, :obj:`str`] A dictionary of
+            :obj:`str`: :obj:`str` pairs that are used to exclude subsetting
+            branches from the exploration function for finding ranges. If when
+            searching the settings object for ranges, a setting with the same
+            name as a key in :attr:`restrict` is found, only subsettings with
             name equal to the corresponding key will be searched.
 
         """
@@ -77,13 +79,15 @@ class Space:
     def set_by_address(self, root: dict, address, value):
         self.get_by_address(root, address[:-1])[address[-1]] = value
 
-    def explore(self, root, path, restrict = None):
+    def explore(self, root, path, restrict=None):
         if issubclass(type(root), js.ListSetting):
             branch = enumerate(root.value)
         elif issubclass(type(root), js.DictionarySetting):
             branch = root.items()
         elif issubclass(type(root), js.Settings):
-            branch = [(k, v) for k, v in root.__dict__.items() if "__" not in k]
+            branch = [
+                (k, v) for k, v in root.__dict__.items() if "__" not in k
+            ]
         else:
             branch = list()
         if restrict:
@@ -95,12 +99,13 @@ class Space:
                     new_path.append(key)
                     if item.match:
                         if item.match in self.matched:
-                            self.matched[item.match]["addresses"].append(new_path)
+                            self.matched[item.match]["addresses"].append(
+                                new_path)
                             self.matched[item.match]["values"].append(item.get)
                         else:
                             self.matched[item.match] = {
                                 "addresses": [new_path],
-                                "values": [item.get] 
+                                "values": [item.get]
                             }
                     else:
                         self.unmatched.append(new_path)
@@ -112,7 +117,7 @@ class Space:
                     new_restrict = v if key == k else None
                     break
                 self.explore(item, new_path, new_restrict)
-   
+
     def build_space(self):
         for match, items in self.matched.items():
             self.addresses += items["addresses"]
@@ -139,19 +144,22 @@ class Space:
                 raise IndexError(f"too many indices for array {self.shape}")
             for idx, item in enumerate(indices):
                 if not isinstance(item, int):
-                    raise IndexError("only integers are valid when accessing arrays")
+                    raise IndexError(
+                        "only integers are valid when accessing arrays")
                 if not 0 <= item < self.shape[idx]:
                     raise IndexError(f"index {item} is out of bounds for axis "
                                      f"{idx} with size {self.shape[idx]}")
             index = 0
             for idx, item in enumerate(indices):
-                index += item * int(prod([len(v) for v in self.values[idx + 1:]]))
+                index += item * int(
+                    prod([len(v) for v in self.values[idx + 1:]]))
         elif isinstance(indices, int):
             if len(self.values) > 1:
                 raise IndexError(f"too many indices for array {self.shape}")
             if not 0 <= indices < self.shape[0]:
-                raise IndexError(f"index {indices} is out of bounds for axis {0} "
-                                 f"with size {self.shape[0]}")
+                raise IndexError(
+                    f"index {indices} is out of bounds for axis {0} "
+                    f"with size {self.shape[0]}")
             index = indices
         else:
             raise IndexError("only integers are valid when accessing arrays")
@@ -164,14 +172,14 @@ class Space:
             return tuple((len(v) for v in self.values))
         else:
             return (1,)
-        
+
     @property
     def zero(self) -> Union[Type[js.Settings], None]:
         if len(self.space) == 1:
             return self.space[0]
         else:
             return None
-    
+
     @property
     def axes(self):
         for item, space in zip(self.addresses, self.values):
@@ -182,14 +190,14 @@ class Space:
         for item in elements:
             rv += f"{item} -> "
         return rv[:-4]
-    
+
     def cout_summary(self):
         from textwrap import fill
         rv = ""
-        rv += f"Computational space dimensions: " + f"{self.shape}\n"\
-                .replace(",", " x")\
-                .replace(")", "")\
-                .replace("(", "")
+        rv += "Computational space dimensions: " + f"{self.shape}\n"\
+              .replace(",", " x")\
+              .replace(")", "")\
+              .replace("(", "")
         axis = 0
         for idx, item in enumerate(self.unmatched):
             rv += f"\naxis: {axis}:"
@@ -214,9 +222,9 @@ class Space:
                        subsequent_indent="\t\t")
             axis += 1
         return rv
-    
+
     def index(self, setting: Type[js.Settings]):
-        linear_index = self.linear_index(setting) 
+        linear_index = self.linear_index(setting)
         return unravel_index(linear_index, self.shape)
 
     def linear_index(self, setting: Type[js.Settings]):
@@ -230,4 +238,3 @@ class Space:
 
     def __len__(self):
         return len(self.space)
-

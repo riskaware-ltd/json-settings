@@ -17,19 +17,20 @@ class TerminusSetting(ABC):
     access the :class:`Terminus` instance, it will return the :attr:`value`
     attribute instead.
 
-    This structure allows for value checks to be applied to individual settings,
-    on instantiation of :class:`~.Settings` derived classes.
+    This structure allows for value checks to be applied to individual
+    settings, on instantiation of :class:`~.Settings` derived classes.
 
     As with the :class:`~.Settings` derived classes, the decorator
-    :meth:`Terminus.assign` should be applied to :class:`Terminus` derived class
-    constructors. If this is done, the abstract method :meth:`Terminus.check` is
-    automatically called after the derived class' constructor.
+    :meth:`Terminus.assign` should be applied to :class:`Terminus` derived
+    class constructors. If this is done, the abstract method
+    :meth:`Terminus.check` is automatically called after the derived class'
+    constructor.
 
     Attributes
     ----------
     type : :obj:`type`
-        The attribute defined in the child class that determines the type of the
-        setting stored in the class.
+        The attribute defined in the child class that determines the type of
+        the setting stored in the class.
 
     value : :obj:`Any`
         The value stored after all checks have been passed.
@@ -62,7 +63,7 @@ class TerminusSetting(ABC):
         ------
         :class:`~.TypeError`
             If the passed value is of the wrong type.
-        
+
         :obj:`ValueError`
             If the passed value is outside acceptable bounds.
 
@@ -106,7 +107,7 @@ class TerminusSetting(ABC):
         ------
         :class:`~.TypeAttributeNotImplementedError`
             If the type attribute has not been defined in the derived class
-            constructor. 
+            constructor.
 
         :class:`~.TypeAttributeTypeError`
             If the :attr:`type` is not of type :obj:`type`
@@ -122,4 +123,3 @@ class TerminusSetting(ABC):
         if not isinstance(value, self.type):
             raise js.SettingTypeError(self.type, type(value))
         self.value = value
-

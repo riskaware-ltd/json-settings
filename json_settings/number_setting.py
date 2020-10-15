@@ -13,16 +13,16 @@ class NumberSetting(js.TerminusSetting):
     ----------
     value : :obj:`Union`[:obj:`float`, :obj:`int`, :obj:`List`]
         The value or list of values stored.
-    
+
     """
 
     @property
     def is_range(self):
         """:obj:`bool` : True if the instance contains a range of values.
-        
+
         """
         return self._range
-    
+
     @property
     def match(self):
         """:obj:`Union`[None, :obj:`str`] : The match parameter.
@@ -38,19 +38,19 @@ class NumberSetting(js.TerminusSetting):
         Parameters
         ----------
         value : :obj:`Union`[:obj:`float`, :obj:`int`, :obj:`dict`]
-            
+
         Raises
         ------
         :class:`~.TypeAttributeNotImplementedError`
             If the type attribute has not been defined in the derived class
-            constructor. 
+            constructor.
 
         :class:`~.TypeAttributeTypeError`
             If the :attr:`type` is not of type :obj:`type`
 
         :class:`~.SettingTypeError`
             If `values` is not a number or valid range dictionary.
-        
+
         """
         if not hasattr(self, "type"):
             raise js.TypeAttributeNotImplementedError(self.__class__)
@@ -68,7 +68,7 @@ class NumberSetting(js.TerminusSetting):
                 f"{self.type} || {{'array': [{self.type}]}} || "
                 f"{{'min': {self.type}, 'max': {self.type}, 'num': {int}}}",
                 type(value))
-    
+
     def __value(self, value):
         """The method that assigns the attributes if a single value is passed.
 
@@ -81,7 +81,7 @@ class NumberSetting(js.TerminusSetting):
         self.value = value
         self._range = False
         self._match = None
-    
+
     def __array(self, value: dict):
         """The method that assigns the attributes if a array of value is passed.
 
@@ -119,7 +119,7 @@ class NumberSetting(js.TerminusSetting):
                     "min": value,
                     "num": int
                 }
-            
+
             Where value is of the defined type.
 
         Raises
@@ -137,7 +137,7 @@ class NumberSetting(js.TerminusSetting):
             If `value`["max"] does not exist.
 
         :class:`~.SettingRangeTypeError`
-            If type(`value`["num"]) is not :obj:`int`. 
+            If type(`value`["num"]) is not :obj:`int`.
 
         :class:`~.SettingRangeKeyError`
             If `value`["num"] does not exist.
@@ -168,7 +168,7 @@ class NumberSetting(js.TerminusSetting):
 
     def lower_bound(self, value):
         """Checks if values are above or equal to a lower bound.
-        
+
         Helper function to be called in derived class check implementation.
 
         Parameters
@@ -194,10 +194,10 @@ class NumberSetting(js.TerminusSetting):
                 raise ValueError(f"must be >= {value}")
             if self.value["max"] < value:
                 raise ValueError(f"must be >= {value}")
-    
+
     def upper_bound(self, value):
         """Checks if values are below or equal to an upper bound.
-        
+
         Helper function to be called in derived class check implementation.
 
         Parameters
@@ -223,10 +223,10 @@ class NumberSetting(js.TerminusSetting):
                 raise ValueError(f"must be <= {value}")
             if self.value["max"] > value:
                 raise ValueError(f"must be <= {value}")
-    
+
     def lower_bound_exclusive(self, value):
         """Checks if values are above an upper bound.
-        
+
         Helper function to be called in derived class check implementation.
 
         Parameters
@@ -252,10 +252,10 @@ class NumberSetting(js.TerminusSetting):
                 raise ValueError(f"must be > {value}")
             if self.value["max"] <= value:
                 raise ValueError(f"must be > {value}")
-    
+
     def upper_bound_exclusive(self, value):
         """Checks if values are above an lower bound.
-        
+
         Helper function to be called in derived class check implementation.
 
         Parameters
@@ -281,4 +281,3 @@ class NumberSetting(js.TerminusSetting):
                 raise ValueError(f"must be < {value}")
             if self.value["max"] >= value:
                 raise ValueError(f"must be < {value}")
- 

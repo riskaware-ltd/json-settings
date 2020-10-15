@@ -24,21 +24,21 @@ class Settings:
 
             @Settings.assign
             def __init__(self, values: dict):
-                self.setting_1 = int
-                self.setting_2 = SubSetting
+                self.setting_0 = int
+                self.setting_1 = SubSetting
 
         class SubSetting(Settings):
 
             @Settings.assign
             def __init__(self, values: dict):
-                self.subsetting_1 = str
+                self.subsetting_0 = str
 
     The `values` parameter should be, for example::
 
         values = {
-            "setting_1": 1,
-            "setting_2": {
-                subsetting_1: "this_is_a_string"
+            "setting_0": 1,
+            "setting_1": {
+                subsetting_0: "this_is_a_string"
             }
         }
 
@@ -46,10 +46,10 @@ class Settings:
 
         settings = UserSettings(values)
 
-        print(settings.setting_1)
-            # 1
+        print(settings.setting_0)
+            # 0
 
-        print(settings.setting_2.subsetting_1)
+        print(settings.setting_1.subsetting_1)
             # this_is_a_string
 
     """
@@ -103,7 +103,7 @@ class Settings:
             If one of the type of one of the settings found in `values`
             is not of the required type, as defined in the derived class'
             constructor.
-        
+
         :class:`~.SettingCheckError`
             If a check error is caught when assigning a setting to a
             :class:`~.Terminus` instance.
@@ -111,8 +111,8 @@ class Settings:
         Note
         ----
         If the setting found in the `values` is None, then this function will
-        assign None as the setting value by default, independent of the expected
-        value.
+        assign None as the setting value by default, independent of the
+        expected value.
 
         """
         for setting, setting_type in self.__dict__.items():
@@ -177,7 +177,7 @@ class Settings:
 
     def __hash__(self):
         return hash(str(self.__source__))
-    
+
     def __eq__(self, other):
         if other.__hash__() == self.__hash__():
             return True

@@ -11,7 +11,7 @@ class Error(Exception):
 
 
 class SettingRangeKeyError(Error):
-    """The exception raised when a :class:`~.Number` instance is missing an 
+    """The exception raised when a :class:`~.Number` instance is missing an
     entry in a range specification.
 
     """
@@ -24,7 +24,7 @@ class SettingRangeKeyError(Error):
 
 class SettingRangeTypeError(Error):
     """The exception raised when a :class:`~.Number` instance is passed an
-    incorrect type in a range specification. 
+    incorrect type in a range specification.
 
     """
     def __init__(self, key: str, expected_type):
@@ -55,7 +55,7 @@ class SettingNotFoundError(Error):
         """The constructor for the :class:`SettingNotFoundError` class.
 
         """
-        self.msg = "Setting not found." 
+        self.msg = "Setting not found."
 
 
 class SettingCheckError(Error):
@@ -67,14 +67,14 @@ class SettingCheckError(Error):
 
         Parameters
         ----------
-        raised_exception 
+        raised_exception
             The exception raised by the test.
         value : T
             The value which failed the check.
         """
         self.raised_exception = raised_exception
         self.msg = raised_exception
-        
+
 
 class SettingTypeError(Error):
     """The exception raised when the setting found in the passed :obj:`dict`
@@ -88,7 +88,7 @@ class SettingTypeError(Error):
         ----------
         expected : :obj:`type`
             The expected type.
-        
+
         actual : :obj:`type`
             The received type.
 
@@ -101,10 +101,11 @@ class SettingErrorMessage(Error):
     is of the wrong type.
 
     """
-    def __init__(self,
-                 current_name: str,
-                 branch_error = None,
-                 original_error: Union[SettingCheckError, SettingTypeError] = None):
+    def __init__(
+            self,
+            current_name: str,
+            branch_error=None,
+            original_error: Union[SettingCheckError, SettingTypeError] = None):
         """The constructor for the :class::`SettingTypeError` class.
 
         Parameters
@@ -123,15 +124,16 @@ class SettingErrorMessage(Error):
             self.route = [current_name] + branch_error.route
             self.original_error = branch_error.original_error
         else:
-            raise ValueError("Must pass either new error or branch error as parameter.")
+            raise ValueError(
+                "Must pass either new error or branch error as parameter.")
 
         super().__init__(self.build_message())
-    
+
     def build_message(self):
         rv = str()
         join = " -> "
         for item in self.route:
-            if "[" in item: 
+            if "[" in item:
                 rv = rv[:-len(join)]
             rv += f"{item}" + join
         rv += f"{str(self.original_error.msg)}"
@@ -151,11 +153,11 @@ class OptionsAttributeNotImplementedError(Error):
         ----------
         derived_class : :obj:`type`
             The name of the derived class that raised the exception.
-        
+
         """
         self.msg = f"The {derived_class} class does not have a self.options"\
                    f"attribute defined in its constructor."
-  
+
 
 class OptionsAttributeTypeError(Error):
     """The exception raised when the value of the `options` attribute defined
@@ -171,13 +173,13 @@ class OptionsAttributeTypeError(Error):
         ----------
         derived_class : :obj:`type`
             The name of the derived class that raised the exception.
-        
+
         """
-        self.msg = f"The {derived_class} class self.options attribute's value "\
-                   f"is not of type {list}, or one of its elements is not of"\
-                   f" type {str}"
+        self.msg = f"The {derived_class} class self.options attribute's "\
+                   f"value is not of type {list}, or one of its elements is "\
+                   f"not of type {str}"
         super().__init__(self.msg)
-        
+
 
 class TypeAttributeNotImplementedError(Error):
     """The exception raised when the `type` attribute has not been defined
@@ -192,12 +194,12 @@ class TypeAttributeNotImplementedError(Error):
         ----------
         derived_class : :obj:`type`
             The name of the derived class that raised the exception.
-        
+
         """
         self.msg = f"The {derived_class} class does not have a self.type "\
                    f"attribute defined in its constructor."
         super().__init__(self.msg)
- 
+
 
 class TypeAttributeTypeError(Error):
     """The exception raised when the value of the `type` attribute defined
@@ -212,7 +214,7 @@ class TypeAttributeTypeError(Error):
         ----------
         derived_class : :obj:`type`
             The name of the derived class that raised the exception.
-        
+
         """
         self.msg = f"The {derived_class} class self.type attribute's value is"\
                    f" not of type `type`."
