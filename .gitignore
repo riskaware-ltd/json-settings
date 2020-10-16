@@ -2,3 +2,4 @@ __pycache__/
 json_settings.egg-info/
 build/
 dist/
+.vscode/
