@@ -113,9 +113,11 @@ class Space:
                         self.values.append(item.get)
             else:
                 new_path.append(key)
+                new_restrict = None
                 for k, v in self.restrict.items():
-                    new_restrict = v if key == k else None
-                    break
+                    if key == k:
+                        new_restrict = [v]
+                        break
                 self.explore(item, new_path, new_restrict)
 
     def build_space(self):
